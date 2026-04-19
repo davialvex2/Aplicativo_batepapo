@@ -2,8 +2,10 @@ package daviaugusto.example.aplicativo_batepapo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
+@EnableFeignClients
 public class AplicativoBatepapoApplication {
 
 	public static void main(String[] args) {
