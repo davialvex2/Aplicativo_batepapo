@@ -1,11 +1,14 @@
 package daviaugusto.example.aplicativo_batepapo.dtos.request;
 
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Builder;
 
 import java.time.LocalDate;
 
 
+@Builder
 public class UsuarioRequest {
 
 
@@ -14,7 +17,6 @@ public class UsuarioRequest {
     private LocalDate dataNascimento;
     private String email;
     private String senha;
-
 
     public UsuarioRequest() {
     }

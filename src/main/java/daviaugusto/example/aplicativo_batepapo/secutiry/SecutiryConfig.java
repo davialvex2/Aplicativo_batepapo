@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -16,7 +15,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -31,10 +29,10 @@ import java.util.List;
 public class SecutiryConfig {
 
     private final JwtUtil jwtUtil;
-    private final UserDatailsServiceImpl userDatailsService;
+    private final UserDatailsService userDatailsService;
 
     @Autowired
-    public SecutiryConfig(JwtUtil jwtUtil, UserDatailsServiceImpl userDatailsService) {
+    public SecutiryConfig(JwtUtil jwtUtil, UserDatailsService userDatailsService) {
         this.jwtUtil = jwtUtil;
         this.userDatailsService = userDatailsService;
     }
@@ -45,11 +43,11 @@ public class SecutiryConfig {
 
         http.cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
-                                .anyRequest().authenticated()
-                        )
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+                        .anyRequest().authenticated())
                 .sessionManagement(session ->  session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();

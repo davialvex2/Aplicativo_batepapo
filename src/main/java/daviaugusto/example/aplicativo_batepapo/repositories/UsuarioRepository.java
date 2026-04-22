@@ -1,0 +1,18 @@
+package daviaugusto.example.aplicativo_batepapo.repositories;
+
+import daviaugusto.example.aplicativo_batepapo.dtos.request.UsuarioRequest;
+import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
+import daviaugusto.example.aplicativo_batepapo.entity.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+
+
+    Optional<Usuario> findByEmail(String email);
+
+    boolean existsByEmail(String email);
+
+
+}

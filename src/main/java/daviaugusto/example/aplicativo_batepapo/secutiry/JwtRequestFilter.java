@@ -15,12 +15,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 
     private final JwtUtil jwtUtil;
-    private final UserDatailsServiceImpl userDatailsService;
+    private final UserDatailsService userDatailsService;
 
-    public JwtRequestFilter(JwtUtil jwtUtil, UserDatailsServiceImpl userDatailsService) {
+    public JwtRequestFilter(JwtUtil jwtUtil, UserDatailsService userDatailsService) {
         this.jwtUtil = jwtUtil;
         this.userDatailsService = userDatailsService;
     }
+
 
 
     @Override
@@ -33,7 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             final String username = jwtUtil.extrairEmailToken(token);
 
             if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userDatailsService.loadUserByUsername(token, username);
+                UserDetails userDetails = userDatailsService.loadUserByUsername(username);
 
                 if (jwtUtil.validateToken(token, username)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

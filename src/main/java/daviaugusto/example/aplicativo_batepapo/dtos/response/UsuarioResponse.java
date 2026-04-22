@@ -2,8 +2,11 @@ package daviaugusto.example.aplicativo_batepapo.dtos.response;
 
 
 
+import lombok.Builder;
+
 import java.time.LocalDate;
 
+@Builder
 public class UsuarioResponse {
 
     private String nome;
