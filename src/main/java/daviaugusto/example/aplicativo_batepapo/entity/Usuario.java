@@ -1,6 +1,7 @@
 package daviaugusto.example.aplicativo_batepapo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import daviaugusto.example.aplicativo_batepapo.secutiry.UserDatailsService;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -27,6 +28,7 @@ public class Usuario implements UserDetails {
     @Column(unique = true)
     private String email;
     private String senha;
+    @JsonIgnore
     @Builder.Default
     @ManyToMany(mappedBy = "usuarios")
     private List<SalaChat> salaChats = new ArrayList<>();

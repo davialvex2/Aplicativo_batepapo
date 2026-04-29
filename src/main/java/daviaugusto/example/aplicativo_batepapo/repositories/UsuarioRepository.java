@@ -4,9 +4,11 @@ import daviaugusto.example.aplicativo_batepapo.dtos.request.UsuarioRequest;
 import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
 import daviaugusto.example.aplicativo_batepapo.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+@Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 

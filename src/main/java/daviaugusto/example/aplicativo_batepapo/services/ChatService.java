@@ -1,12 +1,17 @@
 package daviaugusto.example.aplicativo_batepapo.services;
 
+import daviaugusto.example.aplicativo_batepapo.converter.SalaChatConverter;
 import daviaugusto.example.aplicativo_batepapo.dtos.request.UsuarioRequest;
+import daviaugusto.example.aplicativo_batepapo.dtos.response.SalaChatResponse;
 import daviaugusto.example.aplicativo_batepapo.entity.SalaChat;
+import daviaugusto.example.aplicativo_batepapo.entity.Usuario;
 import daviaugusto.example.aplicativo_batepapo.repositories.SalaChatRepository;
 import daviaugusto.example.aplicativo_batepapo.repositories.UsuarioRepository;
+import daviaugusto.example.aplicativo_batepapo.secutiry.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -19,11 +24,26 @@ public class ChatService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
+    @Autowired
+    private SalaChatConverter salaChatConverter;
 
 
-  public SalaChat criarSala(UsuarioRequest usuario){
+
+  public SalaChatResponse criarSala(String nome, String tokenPuro){
+        String token = tokenPuro.substring(7).trim();
+        String email = jwtUtil.extrairEmailToken(token);
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
         SalaChat sala = new SalaChat();
-        return salaChatRepository.save(sala);
+        sala.setCodigo(criarCodigo());
+        sala.setUsuarioPai(usuario);
+        sala.setNome(nome);
+        List<Usuario> listaUsuarios = sala.getUsuarios();
+        listaUsuarios.add(usuario);
+        sala.setUsuarios(listaUsuarios);
+        return salaChatConverter.paraSalaChatResponse(salaChatRepository.save(sala));
    }
 
 
@@ -38,5 +58,6 @@ public class ChatService {
         }
         return sb.toString();
     }
+
 
 }
