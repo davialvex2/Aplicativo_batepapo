@@ -9,6 +9,7 @@ import java.time.LocalDate;
 @Builder
 public class UsuarioResponse {
 
+    private Long id;
     private String nome;
     private LocalDate dataNascimento;
     private String email;
@@ -17,10 +18,19 @@ public class UsuarioResponse {
     public UsuarioResponse() {
     }
 
-    public UsuarioResponse(String nome, LocalDate dataNascimento, String email) {
+    public UsuarioResponse(Long id, String nome, LocalDate dataNascimento, String email) {
+        this.id = id;
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNome() {

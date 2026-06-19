@@ -47,6 +47,7 @@ public class SecutiryConfig {
                         .requestMatchers(HttpMethod.POST, "/usuario").permitAll()
                         .requestMatchers(HttpMethod.GET, "/auth").permitAll()
                         .requestMatchers(HttpMethod.POST, "/usuario/login").permitAll()
+                        .requestMatchers("/chat/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(session ->  session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

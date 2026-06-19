@@ -13,4 +13,6 @@ public interface SalaChatRepository extends JpaRepository<SalaChat, Long> {
 
     Optional<SalaChat> findByCodigo(String codigo);
 
+    Optional<SalaChat> findByNome(String nome);
+
 }

@@ -46,8 +46,11 @@ public class UsuarioController {
     public ResponseEntity<?> login(@RequestBody LoginRequest login){
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getSenha()));
-            String token  = "Bearer " + jwtUtil.gerarToken(authentication.getName());
-            return ResponseEntity.ok(Map.of("token" , token));
+            String tokenPuro = jwtUtil.gerarToken(authentication.getName());
+            String token  = "Bearer " + tokenPuro;
+            String email = jwtUtil.extrairEmailToken(tokenPuro);
+            UsuarioResponse usuarioResponse = usuarioService.buscarUsuario(email);
+            return ResponseEntity.ok(Map.of("token" , token, "idUsuario", usuarioResponse.getId()));
     }
 
     @GetMapping
@@ -55,9 +58,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.buscarUsuario(email));
     }
 
-    @PostMapping("/conectar")
-    public ResponseEntity<Void> concetarSala(@RequestParam("senha") String senha, @RequestHeader("Authorization") String token){
-        usuarioService.conectarSala(senha, token);
+    @PostMapping("/conectar/{codigo}")
+    public ResponseEntity<Void> concetarSala(@PathVariable String codigo, @RequestHeader("Authorization") String token){
+        usuarioService.conectarSala(codigo, token);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

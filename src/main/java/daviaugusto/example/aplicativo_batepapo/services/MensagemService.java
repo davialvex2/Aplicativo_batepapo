@@ -29,9 +29,8 @@ public class MensagemService {
     private UsuarioRepository usuarioRepository;
 
 
-    public void salvarMensagem(Long idSala, String mensagem, String emailToken){
+    public void salvarMensagem(Long idSala, String mensagem, String email){
         Mensagem mensagemEntity = new Mensagem();
-        String email =jwtUtil.extrairEmailToken(emailToken);
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
         mensagemEntity.setMensagem(mensagem);
         mensagemEntity.setIdUsuario(usuario.getId());

@@ -22,6 +22,7 @@ public class UsuarioConverter {
 
   public UsuarioResponse paraUsuarioResponse(Usuario usuario){
       return UsuarioResponse.builder()
+              .id(usuario.getId())
               .nome(usuario.getNome())
               .email(usuario.getEmail())
               .dataNascimento(usuario.getDataNascimento())
