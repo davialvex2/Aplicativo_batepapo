@@ -35,8 +35,9 @@ public class ChatController {
     public Mensagem enviar(@DestinationVariable String sala, @Payload Mensagem mensagem, SimpMessageHeaderAccessor accessor){
         SalaChat salaChat = salaChatRepository.findByNome(sala).orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada"));
         Principal principal = accessor.getUser();
-        mensagemService.salvarMensagem(salaChat.getId(), mensagem.getMensagem(), principal.getName());
-        return mensagem;
+        Mensagem mensagemSalva = mensagemService.salvarMensagem(salaChat.getId(), mensagem.getMensagem(), principal.getName());
+        System.out.println("Id " + mensagem.getId() + " mensagem " + mensagem.getMensagem() + " Id Usuario " + mensagem.getIdUsuario() + " Nome Usuario " + mensagem.getNomeUsario() + " Sala Id " + mensagem.getSala_id());
+        return mensagemSalva;
     }
 
 }
