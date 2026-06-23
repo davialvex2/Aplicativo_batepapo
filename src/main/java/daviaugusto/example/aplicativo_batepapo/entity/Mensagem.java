@@ -1,6 +1,7 @@
 package daviaugusto.example.aplicativo_batepapo.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,8 @@ public class Mensagem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long idUsuario;
-    private String nomeUsario;
+    private String nomeUsuario;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime timeStamp;
     private String mensagem;
     @Column(name = "sala_id")
@@ -22,10 +24,10 @@ public class Mensagem {
     public Mensagem() {
     }
 
-    public Mensagem(Long id, Long idUsuario, String nomeUsario, LocalDateTime timeStamp, String mensagem, Long sala_id) {
+    public Mensagem(Long id, Long idUsuario, String nomeUsuario, LocalDateTime timeStamp, String mensagem, Long sala_id) {
         this.id = id;
         this.idUsuario = idUsuario;
-        this.nomeUsario = nomeUsario;
+        this.nomeUsuario = nomeUsuario;
         this.timeStamp = timeStamp;
         this.mensagem = mensagem;
         this.sala_id = sala_id;
@@ -47,12 +49,12 @@ public class Mensagem {
         this.idUsuario = idUsuario;
     }
 
-    public String getNomeUsario() {
-        return nomeUsario;
+    public String getNomeUsuario() {
+        return nomeUsuario;
     }
 
-    public void setNomeUsario(String nomeUsario) {
-        this.nomeUsario = nomeUsario;
+    public void setNomeUsuario(String nomeUsuario) {
+        this.nomeUsuario = nomeUsuario;
     }
 
     public LocalDateTime getTimeStamp() {

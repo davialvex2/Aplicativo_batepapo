@@ -13,8 +13,6 @@ import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.security.Principal;
 
@@ -36,7 +34,7 @@ public class ChatController {
         SalaChat salaChat = salaChatRepository.findByNome(sala).orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada"));
         Principal principal = accessor.getUser();
         Mensagem mensagemSalva = mensagemService.salvarMensagem(salaChat.getId(), mensagem.getMensagem(), principal.getName());
-        System.out.println("Id " + mensagem.getId() + " mensagem " + mensagem.getMensagem() + " Id Usuario " + mensagem.getIdUsuario() + " Nome Usuario " + mensagem.getNomeUsario() + " Sala Id " + mensagem.getSala_id());
+        System.out.println("Id " + mensagem.getId() + " mensagem " + mensagem.getMensagem() + " Id Usuario " + mensagem.getIdUsuario() + " Nome Usuario " + mensagem.getNomeUsuario() + " Sala Id " + mensagem.getSala_id());
         return mensagemSalva;
     }
 
