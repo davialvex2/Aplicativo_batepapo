@@ -1,8 +1,10 @@
 package daviaugusto.example.aplicativo_batepapo.services;
 
+import daviaugusto.example.aplicativo_batepapo.converter.MensagemConverter;
 import daviaugusto.example.aplicativo_batepapo.converter.SalaChatConverter;
 import daviaugusto.example.aplicativo_batepapo.dtos.request.SalaRequestRecord;
 import daviaugusto.example.aplicativo_batepapo.dtos.request.UsuarioRequest;
+import daviaugusto.example.aplicativo_batepapo.dtos.response.MensagemResponse;
 import daviaugusto.example.aplicativo_batepapo.dtos.response.SalaChatResponse;
 import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
 import daviaugusto.example.aplicativo_batepapo.entity.SalaChat;
@@ -33,6 +35,9 @@ public class ChatService {
     @Autowired
     private SalaChatConverter salaChatConverter;
 
+    @Autowired
+    private MensagemConverter mensagemConverter;
+
 
     public SalaChatResponse criarSala(String nome, String tokenPuro) {
         String token = tokenPuro.substring(7).trim();
@@ -62,9 +67,9 @@ public class ChatService {
     }
 
 
-    public List<Mensagem> buscarSalaComMensagens(String nome) {
+    public List<MensagemResponse> buscarSalaComMensagens(String nome) {
         SalaChat sala = salaChatRepository.findByNome(nome).orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada"));
-        return sala.getMensagens();
+        return mensagemConverter.paraListaMensagemResponse(sala.getMensagens());
     }
 
 }

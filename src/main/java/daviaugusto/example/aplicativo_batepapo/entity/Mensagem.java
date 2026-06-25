@@ -3,10 +3,12 @@ package daviaugusto.example.aplicativo_batepapo.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Builder
 public class Mensagem {
 
     @Id

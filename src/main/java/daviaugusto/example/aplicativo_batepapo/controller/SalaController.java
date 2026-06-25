@@ -2,6 +2,7 @@ package daviaugusto.example.aplicativo_batepapo.controller;
 
 import daviaugusto.example.aplicativo_batepapo.dtos.request.SalaRequestRecord;
 import daviaugusto.example.aplicativo_batepapo.dtos.request.UsuarioRequest;
+import daviaugusto.example.aplicativo_batepapo.dtos.response.MensagemResponse;
 import daviaugusto.example.aplicativo_batepapo.dtos.response.SalaChatResponse;
 import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
 import daviaugusto.example.aplicativo_batepapo.entity.SalaChat;
@@ -34,15 +35,11 @@ public class SalaController {
 
 
     @GetMapping("/{sala}")
-    public ResponseEntity<List<Mensagem>> buscarSalaMensagens(@PathVariable String sala, @RequestHeader("Authorization") String token){
+    public ResponseEntity<List<MensagemResponse>> buscarSalaMensagens(@PathVariable String sala, @RequestHeader("Authorization") String token){
         return ResponseEntity.status(HttpStatus.OK).body(chatService.buscarSalaComMensagens(sala));
     }
 
-    /*@PostMapping("/{idSala}")
-    public ResponseEntity<Void> salvarMensagem(@PathVariable Long idSala, @RequestBody Mensagem mensagem, @RequestHeader("Authorization") String token){
-        mensagemService.salvarMensagem(idSala, mensagem.getMensagem(), token);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }*/
+
 
 
 

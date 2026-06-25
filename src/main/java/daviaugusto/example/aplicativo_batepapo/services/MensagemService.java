@@ -1,6 +1,8 @@
 package daviaugusto.example.aplicativo_batepapo.services;
 
 
+import daviaugusto.example.aplicativo_batepapo.converter.MensagemConverter;
+import daviaugusto.example.aplicativo_batepapo.dtos.response.MensagemResponse;
 import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
 import daviaugusto.example.aplicativo_batepapo.entity.Usuario;
 import daviaugusto.example.aplicativo_batepapo.exceptions.ResourceNotFoundException;
@@ -26,8 +28,11 @@ public class MensagemService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private MensagemConverter mensagemConverter;
 
-    public Mensagem salvarMensagem(Long idSala, String mensagem, String email){
+
+    public MensagemResponse salvarMensagem(Long idSala, String mensagem, String email){
         Mensagem mensagemEntity = new Mensagem();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("Usuario não encontrado"));
         mensagemEntity.setMensagem(mensagem);
@@ -35,7 +40,7 @@ public class MensagemService {
         mensagemEntity.setNomeUsuario(usuario.getNome());
         mensagemEntity.setTimeStamp(LocalDateTime.now());
         mensagemEntity.setSala_id(idSala);
-        return mensagemRepository.save(mensagemEntity);
+        return mensagemConverter.paraMensagemResponse(mensagemRepository.save(mensagemEntity));
     }
 
 }

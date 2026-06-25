@@ -1,6 +1,8 @@
 package daviaugusto.example.aplicativo_batepapo.controller;
 
 
+import daviaugusto.example.aplicativo_batepapo.dtos.request.MensagemRequest;
+import daviaugusto.example.aplicativo_batepapo.dtos.response.MensagemResponse;
 import daviaugusto.example.aplicativo_batepapo.entity.Mensagem;
 import daviaugusto.example.aplicativo_batepapo.entity.SalaChat;
 import daviaugusto.example.aplicativo_batepapo.exceptions.ResourceNotFoundException;
@@ -30,11 +32,10 @@ public class ChatController {
 
     @MessageMapping("/mensagem/{sala}")
     @SendTo("/topico/chat.enviar/{sala}")
-    public Mensagem enviar(@DestinationVariable String sala, @Payload Mensagem mensagem, SimpMessageHeaderAccessor accessor){
+    public MensagemResponse enviar(@DestinationVariable String sala, @Payload MensagemRequest mensagemRequest, SimpMessageHeaderAccessor accessor){
         SalaChat salaChat = salaChatRepository.findByNome(sala).orElseThrow(() -> new ResourceNotFoundException("Sala não encontrada"));
         Principal principal = accessor.getUser();
-        Mensagem mensagemSalva = mensagemService.salvarMensagem(salaChat.getId(), mensagem.getMensagem(), principal.getName());
-        System.out.println("Id " + mensagem.getId() + " mensagem " + mensagem.getMensagem() + " Id Usuario " + mensagem.getIdUsuario() + " Nome Usuario " + mensagem.getNomeUsuario() + " Sala Id " + mensagem.getSala_id());
+        MensagemResponse mensagemSalva = mensagemService.salvarMensagem(salaChat.getId(), mensagemRequest.getMensagem(), principal.getName());
         return mensagemSalva;
     }
 
